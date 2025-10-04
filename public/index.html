@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App - Claude Docker</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .todo-item {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+    <!-- Container -->
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+                ✅ Todo App
+            </h1>
+            <p class="text-gray-600">
+                Full-stack aplikace s Docker + PostgreSQL + Express
+            </p>
+        </header>
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+
+            <!-- Add Todo Form -->
+            <form id="todo-form" class="mb-8">
+                <div class="flex gap-2">
+                    <input
+                        type="text"
+                        id="todo-input"
+                        placeholder="Co potřebuješ udělat?"
+                        class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors"
+                        required
+                    >
+                    <button
+                        type="submit"
+                        class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        Přidat
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading State -->
+            <div id="loading" class="text-center py-8 hidden">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-indigo-200 border-t-indigo-600"></div>
+                <p class="text-gray-500 mt-4">Načítám...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+                <p id="error-message"></p>
+            </div>
+
+            <!-- Todos List -->
+            <div id="todos-container">
+                <!-- Empty State -->
+                <div id="empty-state" class="text-center py-12 hidden">
+                    <svg class="mx-auto h-24 w-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-600">Zatím žádné úkoly</h3>
+                    <p class="mt-2 text-gray-500">Přidej svůj první todo výše!</p>
+                </div>
+
+                <!-- Todos List -->
+                <ul id="todos-list" class="space-y-3">
+                    <!-- Todo items will be inserted here -->
+                </ul>
+            </div>
+
+            <!-- Stats -->
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>Celkem: <span id="total-count" class="font-semibold text-gray-800">0</span></span>
+                    <span>Dokončeno: <span id="completed-count" class="font-semibold text-green-600">0</span></span>
+                    <span>Zbývá: <span id="remaining-count" class="font-semibold text-indigo-600">0</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 text-gray-600 text-sm">
+            <p>
+                Vytvořeno s
+                <span class="text-red-500">❤️</span>
+                pomocí Claude Code
+            </p>
+            <p class="mt-1">
+                <a href="https://github.com/difikul/claude-docker-test" target="_blank" class="text-indigo-600 hover:text-indigo-700 underline">
+                    GitHub Repository
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- App JavaScript -->
+    <script src="/app.js"></script>
+</body>
+</html>
